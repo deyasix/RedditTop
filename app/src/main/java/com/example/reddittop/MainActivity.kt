@@ -37,11 +37,11 @@ class MainActivity : AppCompatActivity() {
                                     ((System.currentTimeMillis() - it.data.created * 1000) / 3_600_000).roundToInt()
                                 } hours ago"),
                                 "${it.data.num_comments} comments",
-                                it.data.thumbnail
+                                it.data.thumbnail, it.data.url_overridden_by_dest
                             )
                         )
                     }
-                    topList.adapter = PostAdapter(top)
+                    topList.adapter = PostAdapter(this@MainActivity, top)
                 } else {
                     Toast.makeText(
                         this@MainActivity,
