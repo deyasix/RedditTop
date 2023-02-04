@@ -5,6 +5,6 @@ import retrofit2.Response
 import retrofit2.http.GET
 
 interface RedditTopAPI {
-    @GET("https://www.reddit.com/top.json")
+    @GET("/top.json")
     suspend fun getTop() : Response<Top>
 }

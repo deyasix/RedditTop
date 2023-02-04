@@ -9,6 +9,7 @@ data class DataX(
     val author: String,
     val author_flair_background_color: String,
     val author_flair_css_class: String,
+    val author_flair_richtext: List<Any>,
     val author_flair_template_id: String,
     val author_flair_text: String,
     val author_flair_text_color: String,
