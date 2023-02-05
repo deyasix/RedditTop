@@ -3,15 +3,16 @@ package com.example.reddittop
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
-import android.widget.ListView
 import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.reddittop.model.Post
 import kotlin.math.roundToInt
 
 class MainActivity : AppCompatActivity() {
 
-    private lateinit var topList: ListView
+    private lateinit var topList: RecyclerView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +43,7 @@ class MainActivity : AppCompatActivity() {
                         )
                     }
                     topList.adapter = PostAdapter(this@MainActivity, top)
+                    topList.layoutManager = LinearLayoutManager(this@MainActivity)
                 } else {
                     Toast.makeText(
                         this@MainActivity,
