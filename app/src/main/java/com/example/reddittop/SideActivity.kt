@@ -10,20 +10,20 @@ import com.example.reddittop.model.Post
 import kotlinx.coroutines.*
 import kotlin.math.roundToInt
 
-class MainActivity : AppCompatActivity() {
+class SideActivity : AppCompatActivity() {
 
     private lateinit var topList: RecyclerView
     private var after: String = ""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_side)
         topList = findViewById(R.id.topList)
         getTop()
     }
 
     private fun getTop() {
-        topList.adapter = PostAdapter(this@MainActivity, mutableListOf())
-        topList.layoutManager = LinearLayoutManager(this@MainActivity)
+        topList.adapter = PostAdapter(this@SideActivity, mutableListOf())
+        topList.layoutManager = LinearLayoutManager(this@SideActivity)
         getData()
         topList.addOnScrollListener(ScrollListener())
     }

@@ -29,6 +29,12 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".SideActivity"
+            android:exported="true"
+            android:screenOrientation="landscape"
+            android:configChanges="orientation">
+        </activity>
     </application>
 
 </manifest>
