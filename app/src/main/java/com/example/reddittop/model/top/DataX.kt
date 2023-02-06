@@ -33,7 +33,6 @@ data class DataX(
     val distinguished: Any,
     val domain: String,
     val downs: Int,
-    val edited: Boolean,
     val gallery_data: GalleryData,
     val gilded: Int,
     val hidden: Boolean,

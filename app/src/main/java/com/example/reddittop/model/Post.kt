@@ -5,5 +5,5 @@ class Post(
     val date: String,
     val comments: String,
     val thumbnail: String,
-    val fullThumbnail: String
+    val fullThumbnail: String?
 )

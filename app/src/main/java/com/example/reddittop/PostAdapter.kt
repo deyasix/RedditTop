@@ -22,7 +22,11 @@ class PostAdapter(private val context: Context, private val data: MutableList<Po
             binding.date.text = post.date
             Picasso.get().load(post.thumbnail).into(binding.thumbnail)
             binding.thumbnail.setOnClickListener {
-                it.context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(post.fullThumbnail)))
+                it.context.startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW, Uri.parse(post.fullThumbnail ?: post.thumbnail)
+                    )
+                )
             }
         }
     }
@@ -30,8 +34,7 @@ class PostAdapter(private val context: Context, private val data: MutableList<Po
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): PostViewHolder {
         return PostViewHolder(
             ListItemBinding.inflate(
-                LayoutInflater.from(context),
-                parent, false
+                LayoutInflater.from(context), parent, false
             )
         )
     }
@@ -40,4 +43,12 @@ class PostAdapter(private val context: Context, private val data: MutableList<Po
         holder.bind(data[position])
 
     override fun getItemCount(): Int = data.size
+
+    fun addData(listItems: List<Post>) {
+        val size = data.size
+        data.addAll(listItems)
+        val sizeNew = data.size
+        notifyItemRangeChanged(size, sizeNew)
+    }
+
 }
