@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/date" />
         <ImageView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:id="@+id/thumbnail"
             android:clickable="true"
@@ -28,6 +28,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/comment" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/download_image"
+            android:id="@+id/downloadButton"
+            />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

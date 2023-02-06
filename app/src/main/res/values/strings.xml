@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">RedditTop</string>
     <string name="image_description">Thumbnail of post</string>
+    <string name="download_image">Download image</string>
 </resources>
