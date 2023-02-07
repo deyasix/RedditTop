@@ -18,17 +18,20 @@ class MainActivity : AppCompatActivity() {
     private var after: String = ""
     var state: Parcelable? = null
 
+    companion object {
+        var list: MutableList<Post> = mutableListOf()
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         setContentView(R.layout.activity_main)
         topList = findViewById(R.id.topList)
         getTop()
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
-        super.onRestoreInstanceState(savedInstanceState)
         state = savedInstanceState.getParcelable("ListState")
+        super.onRestoreInstanceState(savedInstanceState)
     }
 
     override fun onSaveInstanceState(savedInstanceState: Bundle) {
@@ -69,9 +72,16 @@ class MainActivity : AppCompatActivity() {
                                 )
                             )
                         }
-                        after = (body.data.after)
-                        (topList.adapter as PostAdapter).addData(top)
-                        (topList.layoutManager as LinearLayoutManager).onRestoreInstanceState(state)
+                        if (state != null && after == "") {
+                            (topList.adapter as PostAdapter).addData(list)
+                            (topList.layoutManager as LinearLayoutManager).onRestoreInstanceState(
+                                state
+                            )
+                        } else {
+                            (topList.adapter as PostAdapter).addData(top)
+                        }
+                        list = (topList.adapter as PostAdapter).getData()
+                        after = body.data.after
                     }
 
                 }

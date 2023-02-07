@@ -109,4 +109,6 @@ class PostAdapter(private val context: Context, private val data: MutableList<Po
         }
     }
 
+    fun getData() = data
+
 }
