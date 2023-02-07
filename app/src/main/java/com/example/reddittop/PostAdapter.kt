@@ -4,7 +4,6 @@ import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
-import android.graphics.Canvas
 import android.net.Uri
 import android.os.Build
 import android.os.Environment
@@ -12,13 +11,14 @@ import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.example.reddittop.databinding.ListItemBinding
 import com.example.reddittop.model.Post
 import com.squareup.picasso.Picasso
-import java.io.*
+import java.io.File
+import java.io.FileOutputStream
+import java.io.OutputStream
 
 
 class PostAdapter(private val context: Context, private val data: MutableList<Post>) :
@@ -40,8 +40,13 @@ class PostAdapter(private val context: Context, private val data: MutableList<Po
                 )
             }
             binding.downloadButton.setOnClickListener {
-                val bitmap = getImage(binding.thumbnail)
+                val address =
+                    if (post.fullThumbnail != null && post.fullThumbnail.startsWith("https://i.redd.it")) post.fullThumbnail else post.thumbnail
+                val bitmap = getImage(address)
                 if (bitmap != null) saveToStorage(bitmap)
+                else {
+                    Log.e("Error", address)
+                }
             }
         }
     }
@@ -67,18 +72,18 @@ class PostAdapter(private val context: Context, private val data: MutableList<Po
         notifyItemRangeChanged(size, sizeNew)
     }
 
-    fun getImage(view: ImageView): Bitmap? {
-        var image: Bitmap? = null
-        try {
-            image = Bitmap.createBitmap(
-                view.measuredWidth, view.measuredHeight, Bitmap.Config.ARGB_8888
-            )
-            val canvas = Canvas(image)
-            view.draw(canvas)
-        } catch (ex: Exception) {
-            ex.localizedMessage?.let { Log.e("Error", it) }
+    fun getImage(address: String): Bitmap? {
+        var result: Bitmap? = null
+        val thread = Thread() {
+            try {
+                result = Picasso.get().load(address).get()
+            } catch (ex: Exception) {
+                Log.e(ex.localizedMessage, address)
+            }
         }
-        return image
+        thread.start()
+        thread.join()
+        return result
     }
 
     fun saveToStorage(bitmap: Bitmap) {
