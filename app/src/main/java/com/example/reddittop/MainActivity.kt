@@ -1,6 +1,7 @@
 package com.example.reddittop
 
 import android.os.Bundle
+import android.os.Parcelable
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -10,15 +11,32 @@ import com.example.reddittop.model.Post
 import kotlinx.coroutines.*
 import kotlin.math.roundToInt
 
+
 class MainActivity : AppCompatActivity() {
 
     private lateinit var topList: RecyclerView
     private var after: String = ""
+    var state: Parcelable? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContentView(R.layout.activity_main)
         topList = findViewById(R.id.topList)
         getTop()
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        state = savedInstanceState.getParcelable("ListState")
+    }
+
+    override fun onSaveInstanceState(savedInstanceState: Bundle) {
+        savedInstanceState.putParcelable(
+            "ListState",
+            (topList.layoutManager as LinearLayoutManager).onSaveInstanceState()
+        )
+        super.onSaveInstanceState(savedInstanceState)
     }
 
     private fun getTop() {
@@ -53,6 +71,7 @@ class MainActivity : AppCompatActivity() {
                         }
                         after = (body.data.after)
                         (topList.adapter as PostAdapter).addData(top)
+                        (topList.layoutManager as LinearLayoutManager).onRestoreInstanceState(state)
                     }
 
                 }
