@@ -20,6 +20,7 @@ class MainActivity : AppCompatActivity() {
 
     companion object {
         var list: MutableList<Post> = mutableListOf()
+        var prevAfter = ""
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -77,11 +78,13 @@ class MainActivity : AppCompatActivity() {
                             (topList.layoutManager as LinearLayoutManager).onRestoreInstanceState(
                                 state
                             )
+                            after = prevAfter
                         } else {
                             (topList.adapter as PostAdapter).addData(top)
+                            after = body.data.after
                         }
                         list = (topList.adapter as PostAdapter).getData()
-                        after = body.data.after
+                        prevAfter = after
                     }
 
                 }
