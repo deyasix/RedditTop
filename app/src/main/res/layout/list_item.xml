@@ -5,7 +5,8 @@
     android:paddingStart="10dp"
     android:paddingTop="5dp"
     android:paddingEnd="10dp"
-    android:paddingBottom="5dp">
+    android:paddingBottom="5dp"
+    android:id="@+id/list">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -13,27 +14,48 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/author" />
+            android:id="@+id/author"
+            android:textSize="20sp"
+            android:layout_marginStart="10dp"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/date" />
-        <ImageView
+            android:id="@+id/date"
+            android:textSize="18sp"
+            android:layout_marginStart="15dp"/>
+        <LinearLayout
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/thumbnail"
-            android:clickable="true"
-            android:contentDescription="@string/image_description" />
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/thumbnail"
+                android:clickable="true"
+                android:contentDescription="@string/image_description"
+                android:layout_margin="15dp"
+                android:adjustViewBounds="true"
+                android:scaleType="fitCenter"  />
+            <Button
+                android:layout_width="40dp"
+                android:layout_height="45dp"
+                android:layout_gravity="center"
+                android:id="@+id/downloadButton"
+                android:text=""
+                android:drawableTop="@drawable/ic_baseline_download_24"
+                />
+        </LinearLayout>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/comment" />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/download_image"
-            android:id="@+id/downloadButton"
-            />
+            android:id="@+id/comment"
+            android:textSize="18sp"
+            android:layout_marginStart="15dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/grey"
+            android:layout_marginTop="10dp"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

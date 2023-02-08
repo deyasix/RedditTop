@@ -28,10 +28,10 @@ class PostAdapter(private val context: Context, private val data: MutableList<Po
         private val binding = postLayoutBinding
 
         fun bind(post: Post) {
+            Picasso.get().load(post.thumbnail).into(binding.thumbnail)
             binding.author.text = post.author
             binding.comment.text = post.comments
             binding.date.text = post.date
-            Picasso.get().load(post.thumbnail).into(binding.thumbnail)
             binding.thumbnail.setOnClickListener {
                 it.context.startActivity(
                     Intent(
@@ -40,14 +40,21 @@ class PostAdapter(private val context: Context, private val data: MutableList<Po
                 )
             }
             binding.downloadButton.setOnClickListener {
-                val address =
-                    if (post.fullThumbnail != null && post.fullThumbnail.startsWith("https://i.redd.it")) post.fullThumbnail else post.thumbnail
-                val bitmap = getImage(address)
-                if (bitmap != null) saveToStorage(bitmap)
+                if (binding.thumbnail.drawable == null) {
+                    Toast.makeText(context, "Image was not found. Post has no image or image is uploading now", Toast.LENGTH_LONG).show()
+                }
                 else {
-                    Log.e("Error", address)
+                    val address =
+                        if (post.fullThumbnail != null && post.fullThumbnail.startsWith("https://i.redd.it")) post.fullThumbnail else post.thumbnail
+                    val bitmap = getImage(address)
+                    if (bitmap != null) saveToStorage(bitmap)
+                    else {
+                        Log.e("Error", address)
+                    }
                 }
             }
+
+
         }
     }
 
